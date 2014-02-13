@@ -7,6 +7,7 @@ function love.load()
 	else
 		highscore = 0
 	end
+	highscore = 0
 	width = 18
 	height = 18
 	mariox = 385
@@ -64,22 +65,19 @@ function love.update(dt)
 	if mariodied == true then
 		time = time + dt
 	end
-if mariox + height > 800 or mariox < 0 or marioy + width > 600 or marioy < 0 then -- Thanks Automatik for giving me this highscore saving code!
-	if not mariodied then
-		if highscore<(topspeed + distance) * (speed + 1) then -- The player has beat the highscore
-			highscore = (topspeed + distance) * (speed + 1)
-			love.filesystem.write("highscore.txt",tostring(highscore))
-			end
-		end
-		mariodied = true
-	end
-end
-
-function love.mousepressed(x, y, button)
-	if button == "l" and x > mariox and x < mariox + width and y > marioy and y < marioy + height then
+	if highscore < (topspeed + distance) * (speed + 1) then
 		image = love.graphics.newImage("tanooki.png")
 	end
-end
+	if mariox > 800 or mariox < 0 or marioy > 600 or marioy < 0 then
+		if not mariodied then
+			if highscore < (topspeed + distance) * (speed + 1) then -- The player has beat the highscore
+				highscore = (topspeed + distance) * (speed + 1)
+				love.filesystem.write("highscore.txt",tostring(highscore))
+				end
+			end
+			mariodied = true
+		end
+	end
 
 function love.draw()
 	if mariodied == false then
@@ -112,8 +110,11 @@ function love.draw()
 		end
 		if time > 6 then
 			love.graphics.print('Final Score: ' .. (topspeed + distance) * (speed + 1) .. ' (x' .. math.floor(speed) + 1 .. ')', 236, 338)
-			deathimg = love.graphics.newImage("medal.png")
-		elseif time > 26 then
+			if highscore < (topspeed + distance) * (speed + 1) then
+				deathimg = love.graphics.newImage("medal.png")
+			end
+		end
+		if time > 26 then
 			love.graphics.print('Final Score: Why are you still here?', 236, 338)
 		end
 	end
