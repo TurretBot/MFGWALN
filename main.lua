@@ -1,5 +1,5 @@
 function love.load()
-	love.graphics.setBackgroundColor(235,235,235)
+	love.graphics.setBackgroundColor(135,135,135)
 	image = love.graphics.newImage("mario.png")
 	deathimg = love.graphics.newImage("dead.png")
 	width = 18
