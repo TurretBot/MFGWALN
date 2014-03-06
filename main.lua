@@ -7,7 +7,6 @@ function love.load()
 	else
 		highscore = 0
 	end
-	highscore = 0
 	width = 18
 	height = 18
 	mariox = 385
